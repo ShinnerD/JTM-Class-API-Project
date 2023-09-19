@@ -2,7 +2,6 @@
 using API.Database;
 using API.Database.Repository;
 using API.Database.Repository.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace API
 {
