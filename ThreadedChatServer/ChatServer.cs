@@ -18,11 +18,10 @@ namespace ThreadedChatServer
 
         Console.WriteLine("The server is running at port 8001...");
         Console.WriteLine("The local End point is  :" + tcpListener.LocalEndpoint);
+        Console.WriteLine("Waiting for a connection.....");
 
         while (true)
         {
-          Console.WriteLine("Waiting for a connection.....");
-
           var socket = tcpListener.AcceptSocket();
           var connectedIPAddress = socket.RemoteEndPoint as IPEndPoint;
           var clientHandler = new ClientHandler(socket, Guid.NewGuid());
@@ -75,7 +74,7 @@ namespace ThreadedChatServer
 
     public static void ChatWriteToAllClients(ClientHandler client, string message)
     {
-      foreach (var clientHandler in ClientHandlers.Values.Where(i => !client.Equals(i)))
+      foreach (var clientHandler in ClientHandlers.Values)
       {
         clientHandler.ChatWriter.Write(client.UserHandle + ": " + message + "\n");
       }
@@ -86,6 +85,7 @@ namespace ThreadedChatServer
       if (HasUser(receivingUserName, out var receivingClientHandler))
       {
         receivingClientHandler?.ChatWriter.Write("PRIVATE from " + sendingClient.UserHandle + ": " + message + "\n");
+        sendingClient.ChatWriter.Write("To " + receivingClientHandler?.UserHandle + ": " + message + "\n");
         return;
       }
 

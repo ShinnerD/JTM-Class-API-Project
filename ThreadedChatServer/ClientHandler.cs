@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System.Net;
+using System.Net.Sockets;
 using System.Text.RegularExpressions;
 
 namespace ThreadedChatServer
@@ -27,50 +28,67 @@ namespace ThreadedChatServer
 
     public void HandleClient()
     {
-      SystemWriter.Write("Connection accepted.\n");
-      while (ActiveSocket.Connected)
+      try
       {
-        while (string.IsNullOrEmpty(UserHandle))
+        SystemWriter.Write("Connection accepted.\n");
+        while (ActiveSocket.Connected)
         {
-          SystemWriter.Write("Please enter desired user handle. \n");
-          SystemWriter.Write("Handle can only contain letters, numbers and _ \n");
-          SystemWriter.Write("Handle must be no longer than +" + allowedHandleLength + " characters. \n");
-          var userNameInput = _reader.ReadString();
-
-          if (!string.IsNullOrEmpty(userNameInput)
-          && allowedHandleLetters.IsMatch(userNameInput)
-          && userNameInput.Length <= allowedHandleLength)
+          while (string.IsNullOrEmpty(UserHandle))
           {
-            UserHandle = userNameInput;
-            SystemWriter.Write("Handle Accepted. You can now chat with others. \n");
-            SystemWriter.Write("Type @Username to send a private message. \n");
-            SystemWriter.Write("Type /users to list all users. \n");
+            SystemWriter.Write("Please enter desired user handle. Handle can only contain letters, numbers and _ \n");
+            SystemWriter.Write("Handle must be no longer than +" + allowedHandleLength + " characters. \n");
+            var userNameInput = _reader.ReadString();
+
+            if (ChatServer.HasUser(userNameInput, out _))
+            {
+              SystemWriter.Write("That username is already taken.\n");
+              continue;
+            }
+
+            if (!string.IsNullOrEmpty(userNameInput)
+            && allowedHandleLetters.IsMatch(userNameInput)
+            && userNameInput.Length <= allowedHandleLength)
+            {
+              UserHandle = userNameInput;
+
+              ChatServer.SystemWriteToAllClients(UserHandle + " has joined the server.");
+              SystemWriter.Write("Type @Username to send a private message. \n");
+              SystemWriter.Write("Type /users to list all users. \n");
+            }
           }
+
+          var userInput = _reader.ReadString();
+
+          if (string.IsNullOrWhiteSpace(userInput))
+            continue;
+
+          if (userInput.StartsWith('@'))
+          {
+            var username = userInput.Split(' ')[0].Substring(1);
+            var message = userInput.Substring(userInput.IndexOf(' ') + 1);
+            ChatServer.ChatWriteToClient(this, username, message);
+            continue;
+          }
+
+          if (userInput.TrimEnd() == "/users")
+          {
+            SystemWriter.Write("USERS: " + string.Join(", ", ChatServer.ClientHandlers.Values.Select(i => i.UserHandle).OrderBy(i => i).ToArray()) + "\n");
+            continue;
+          }
+
+          ChatServer.ChatWriteToAllClients(this, userInput);
         }
 
-        var userInput = _reader.ReadString();
-
-        if (string.IsNullOrWhiteSpace(userInput))
-          continue;
-
-        if (userInput.StartsWith('@'))
-        {
-          var username = userInput.Split(' ')[0].Substring(1);
-          var message = userInput.Split(' ')[1];
-          ChatServer.ChatWriteToClient(this, username, message);
-          continue;
-        }
-
-        if (userInput.TrimEnd() == "/users")
-        {
-          SystemWriter.Write("USERS: " + string.Join(", ", ChatServer.ClientHandlers.Values.Select(i => i.UserHandle).OrderBy(i => i).ToArray()));
-          continue;
-        }
-
-        ChatServer.ChatWriteToAllClients(this, userInput);
+        ChatServer.RemoveClientHandler(this);
       }
-
-      ChatServer.RemoveClientHandler(this);
+      catch (Exception)
+      {
+        ChatServer.RemoveClientHandler(this);
+        ChatServer.SystemWriteToAllClients(UserHandle + " has disconnected.");
+        var ipAddress = ActiveSocket.RemoteEndPoint as IPEndPoint;
+        Console.WriteLine("Connection from " + ipAddress.Address + " has been closed.");
+        ActiveSocket.Close();
+      }
     }
   }
 }
