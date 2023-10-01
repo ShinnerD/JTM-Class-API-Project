@@ -16,7 +16,8 @@ namespace TelnetShell
       var port = 8001;
 
       Console.WriteLine("Connecting to " + ipAdresse + " " + port);
-
+      Console.WriteLine("Exit with /quit");
+      
       try
       {
         tcpClient.Connect(ipAdresse, port);
@@ -37,7 +38,7 @@ namespace TelnetShell
           {
             writer.Write(input);
           }
-        } while (input != "q");
+        } while (input != "/quit");
       }
       catch (Exception ex)
       {
@@ -56,7 +57,7 @@ namespace TelnetShell
     {
       try
       {
-        while (true)
+        while (tcpClient.Connected)
         {
           string message = reader.ReadString();
           Console.WriteLine(message);
@@ -64,7 +65,6 @@ namespace TelnetShell
       }
       catch (Exception)
       {
-        // Handle any exceptions or disconnects here
         Console.WriteLine("Disconnected from the server.");
       }
     }

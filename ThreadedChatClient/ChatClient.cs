@@ -1,8 +1,8 @@
 namespace ThreadedChatClient
 {
-  public partial class Form1 : Form
+  public partial class ChatClient : Form
   {
-    public Form1()
+    public ChatClient()
     {
       InitializeComponent();
     }
