@@ -55,7 +55,7 @@ namespace ConsoleApp59WebClient
         tryParse = int.TryParse(Console.ReadLine(), out customerNumber);
       }
 
-      var url = "https://localhost:32768/api/Customer/" + customerNumber;
+      var url = "https://localhost:32774/api/Customer/" + customerNumber;
 
       using (HttpClient client = new HttpClient())
       {
@@ -88,7 +88,7 @@ namespace ConsoleApp59WebClient
       Console.WriteLine("Please enter new customer last name: ");
       var newLastName = Console.ReadLine();
 
-      var url = "https://localhost:32768/api/Customer";
+      var url = "https://localhost:32774/api/Customer";
 
       var newCustomer = new CustomerCreateRequest()
       {
@@ -123,7 +123,7 @@ namespace ConsoleApp59WebClient
         Console.WriteLine("Please enter customer Id: ");
         var requestedId = Console.ReadLine();
 
-        var url = "https://localhost:32768/api/Customer/" + requestedId;
+        var url = "https://localhost:32774/api/Customer/" + requestedId;
 
         using (HttpClient client = new HttpClient())
         {
@@ -161,7 +161,7 @@ namespace ConsoleApp59WebClient
       {
         try
         {
-          var url = "https://localhost:32768/api/Customer";
+          var url = "https://localhost:32774/api/Customer";
           // Set a timeout for the HTTP request
           client.Timeout = TimeSpan.FromSeconds(30);
 

@@ -5,7 +5,13 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{175403B9-E4D4-43C4-A3AA-A7932DFE0B1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientShell", "HttpClientShell\HttpClientShell.csproj", "{CF72719D-B930-487B-9BC9-2DAF2FEC928D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpClientShell", "HttpClientShell\HttpClientShell.csproj", "{CF72719D-B930-487B-9BC9-2DAF2FEC928D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketServer", "SocketServer\SocketServer.csproj", "{0CC4693E-27CF-499D-BE5D-4C016C18B85E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelnetShell", "TelnetShell\TelnetShell.csproj", "{C6271C8A-111B-41E4-91DA-B12006CE00C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadedChatServer", "ThreadedChatServer\ThreadedChatServer.csproj", "{006B59F6-7B5C-4EB8-B72B-3AA46F6E7ABE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{CF72719D-B930-487B-9BC9-2DAF2FEC928D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF72719D-B930-487B-9BC9-2DAF2FEC928D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF72719D-B930-487B-9BC9-2DAF2FEC928D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CC4693E-27CF-499D-BE5D-4C016C18B85E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CC4693E-27CF-499D-BE5D-4C016C18B85E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CC4693E-27CF-499D-BE5D-4C016C18B85E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CC4693E-27CF-499D-BE5D-4C016C18B85E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6271C8A-111B-41E4-91DA-B12006CE00C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6271C8A-111B-41E4-91DA-B12006CE00C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6271C8A-111B-41E4-91DA-B12006CE00C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6271C8A-111B-41E4-91DA-B12006CE00C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{006B59F6-7B5C-4EB8-B72B-3AA46F6E7ABE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{006B59F6-7B5C-4EB8-B72B-3AA46F6E7ABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{006B59F6-7B5C-4EB8-B72B-3AA46F6E7ABE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{006B59F6-7B5C-4EB8-B72B-3AA46F6E7ABE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
